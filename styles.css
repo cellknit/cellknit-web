@@ -1,0 +1,609 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@700;800&display=swap');
+
+:root {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --text-secondary: #a1a1a6;
+  /* Apple-ish secondary gray */
+  --accent-pink: #E4007F;
+  /* Explicitly set per user instruction */
+  --accent-grey: #4A4A4A;
+  /* Explicitly set per user instruction */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --nav-height: 100px;
+  /* Increased from 70px */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Animations */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  /* Default state: Visible (Fallback) */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Only hide and animate if JS is running (body class added) */
+body.animations-enabled .fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  transform: translateY(30px);
+}
+
+body.animations-enabled .fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+.text-pink {
+  color: var(--accent-pink);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  padding: 0 8%;
+  /* Increased padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo img {
+  height: 55px;
+  /* Adjusted for cropped logo */
+  width: auto;
+  object-fit: contain;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-left: 2rem;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--text-color);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: var(--accent-pink);
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(228, 0, 127, 0.3);
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  /* Increased height for parallax bleed */
+  z-index: -1;
+  will-change: transform;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transform: scale(1.1);
+  will-change: transform;
+  animation: breathe 20s infinite alternate;
+}
+
+@keyframes breathe {
+  from {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1.15);
+  }
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 0 20px;
+  z-index: 1;
+}
+
+.hero-sub {
+  color: var(--accent-pink);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+}
+
+/* Hero Title Hierarchy */
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+  /* Tight grouping */
+  margin-bottom: 2rem;
+}
+
+.hero-eyebrow {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  /* Medium weight */
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  /* Extra letter spacing */
+  margin-bottom: 0.2rem;
+  /* Reduced visual separation */
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.hero-main {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 3rem;
+  /* Reduced from 3.5rem */
+  font-weight: 400;
+  /* Lighter weight */
+  margin-bottom: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  /* Reduced line height */
+}
+
+.hero-brand {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  /* Montserrat for Brand */
+  font-size: 6rem;
+  font-weight: 800;
+  /* Heavy weight */
+  color: var(--accent-pink);
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+  /* Tighter line height */
+  margin-top: 10px;
+  /* Reduced space */
+}
+
+@media (max-width: 768px) {
+  .hero-main {
+    font-size: 1.8rem;
+  }
+
+  .hero-brand {
+    font-size: 3.5rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 1rem;
+  }
+
+  .logo img {
+    height: 40px;
+    /* Mobile logo size */
+  }
+}
+
+/* Sections General */
+section {
+  padding: 120px 5%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 40px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tech-media {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: subtle-breath 5s ease-in-out infinite !important;
+}
+
+@keyframes subtle-breath {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+/* Performance Section */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 30px;
+}
+
+.stat-number {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--accent-pink);
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+/* Marquee / Milestones */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 20px 0;
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  margin-top: 2rem;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: scroll 40s linear infinite;
+}
+
+.marquee-item {
+  display: inline-block;
+  margin-right: 50px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.marquee-item span {
+  color: var(--accent-pink);
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Partners */
+/* Partners */
+/* Partners */
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Mobile: 2 columns */
+  gap: 30px;
+  align-items: center;
+  justify-items: center;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .partner-grid {
+    grid-template-columns: repeat(5, 1fr);
+    /* Desktop: 5 columns */
+    gap: 40px;
+  }
+}
+
+.partner-logo {
+  height: 80px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.7;
+  filter: grayscale(100%);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.partner-logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+/* Footer */
+/* Footer styles removed to use inline final-footer styles */
+
+@media (max-width: 768px) {
+  .partner-logo {
+    height: 60px;
+  }
+
+
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .grid-2,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Mobile Navigation and Responsive Fixes */
+  @media (max-width: 768px) {
+
+    /* Mobile Navigation and Responsive Fixes */
+    .navbar {
+      padding: 0 20px;
+    }
+
+    .menu-toggle {
+      display: flex !important;
+      flex-direction: column;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    /* Updated Bar Styles */
+    .menu-toggle .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #ffffff;
+      margin: 4px 0;
+      transition: 0.4s;
+      display: block;
+    }
+
+    /* Hamburger active state */
+    .menu-toggle.active .bar:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    /* Nav Links - Initially Hidden using Display: None */
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: var(--nav-height);
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      text-align: center;
+      padding: 2rem 0;
+      height: auto;
+      /* Let content dictate height, or keep 100vh if full screen preferred */
+      transform: none;
+      /* Removing transform as we use display property logic now */
+      backdrop-filter: none;
+      /* Simplified overlay */
+    }
+
+    .nav-links.active {
+      display: flex !important;
+    }
+
+    .nav-links a {
+      margin: 20px 0;
+      font-size: 1.2rem;
+    }
+
+    .hero-main {
+      font-size: 1.8rem;
+    }
+
+    .hero-brand {
+      font-size: 3.5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 1rem;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    /* Vertical Stacking for Grids */
+    .grid-2,
+    .stats-grid,
+    .partner-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .partner-grid {
+      grid-template-columns: repeat(2, 1fr);
+      /* Keep 2 columns for logos on mobile for compactness */
+    }
+
+    section {
+      padding: 80px 20px;
+    }
+  }
+
+  /* Default Hamburger - Hidden on Desktop */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  /* Cleanup contact styles */
+  #contact,
+  .contact-info {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
